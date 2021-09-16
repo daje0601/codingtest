@@ -51,8 +51,14 @@ class Solution:
 # solution2 - discussion 참조 
 class Solution:
     def mergeTwoLists(self, a, b):
+        # a가 b보다 큰 경우 
+        # not a라는 것은 링크드 리스트가 None이냐고 묻는 것이다. 
+        # 링크드 리스트 맨 마지막에는 None이 들어있기 때문에 a가 끝이라면 a를 맨 뒤로 보내는 작업 필요하다. 
+        # b and a.val > b.val는 b가 남아 있는 상황이고 그게 a가 더 크다면 a랑 b랑 위치를 바꿔야 한다. 
         if not a or b and a.val > b.val:
             a, b = b, a
+        
+        # a가 b보다 작은 경우 
         if a:
             a.next = self.mergeTwoLists(a.next, b)
         return a
