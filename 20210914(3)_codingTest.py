@@ -38,16 +38,6 @@ class Solution:
 ## ------------------------------------------------------
 
 # solution1 - discussion 참조 
-def mergeTwoLists(self, a, b):
-    if not a or b and a.val > b.val:
-        a, b = b, a
-    if a:
-        a.next = self.mergeTwoLists(a.next, b)
-    return a
-  
-## ------------------------------------------------------
-
-# solution2 - discussion 참조 
 class Solution:
     def mergeTwoLists(self, a, b):
         if a and b:
@@ -55,3 +45,14 @@ class Solution:
                 a, b = b, a
             a.next = self.mergeTwoLists(a.next, b)
         return a or b
+  
+## ------------------------------------------------------
+
+# solution2 - discussion 참조 
+class Solution:
+    def mergeTwoLists(self, a, b):
+        if not a or b and a.val > b.val:
+            a, b = b, a
+        if a:
+            a.next = self.mergeTwoLists(a.next, b)
+        return a
