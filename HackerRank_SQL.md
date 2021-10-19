@@ -51,7 +51,7 @@
   - 링크 : https://www.hackerrank.com/challenges/occupations/problem  
 
 
-4. Occupations
+4. Binary Tree Nodes
  - 문제의 해석 : 트리 노드 정보를 담고 있는 테이블에서 각각의 row가 어디에 해당하는지를 가려내는 문제입니다. 
  - 선정한 이유 : 트리에 대한 이해와 SQL조건문을 다룰 수 있는지를 확인 할 수 있는 문제여서 선정하였습니다. 
  - 접근방식 : P에 null이 있다면 그것은 루트노드로 간주 할 수 있고, n에 있는 값이 P 있다면 inner 노드라고 간주할 수 있다는 아이디어로 접근하였습니다. 
