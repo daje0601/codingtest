@@ -107,3 +107,27 @@ group by h.hacker_id, h.name
 having count(s.hacker_id) > 1
 order by count(s.hacker_id) desc, s.hacker_id asc
 ```
+
+7.
+ - 문제의 해석 : 코딩테스트 제출자 중 full score 맞은 문제가 한개보다 많은 (2개 이상) 인 참가자의 hacker_id와, name을 출력하라는문제입니다.
+                여기서 full score가 무엇이지? 고민할 수 있는데, 각 문제별도 주어진 점수표가 full score가 됩니다. 
+ - 선정한 이유 : join에 대한 훈련을 할 수 있기때문입니다. 
+ - 접근방식 : 
+  1) submissions table을 base로 필요한 정보를 담고 있는 테이블들을 join합니다.    
+  2) 제출한 문제의 full score 를 알기 위해 difficuly 테이블의 score 정보가 필요합니다. 
+  3) difficulty level 정보가 있어야 full score 를 연결할 수 있고, 그 정보는 Challenges 테이블에 있습니다. 
+  4) hacker의 이름을 출력하기 위해 Hackers 테이블이 필요합니다. 
+ - 링크 : https://www.hackerrank.com/challenges/full-score/problem
+ - 코드 
+ - 
+8.
+ - 문제의 해석 : 코딩테스트 제출자 중 full score 맞은 문제가 한개보다 많은 (2개 이상) 인 참가자의 hacker_id와, name을 출력하라는문제입니다.
+                여기서 full score가 무엇이지? 고민할 수 있는데, 각 문제별도 주어진 점수표가 full score가 됩니다. 
+ - 선정한 이유 : join에 대한 훈련을 할 수 있기때문입니다. 
+ - 접근방식 : 
+  1) submissions table을 base로 필요한 정보를 담고 있는 테이블들을 join합니다.    
+  2) 제출한 문제의 full score 를 알기 위해 difficuly 테이블의 score 정보가 필요합니다. 
+  3) difficulty level 정보가 있어야 full score 를 연결할 수 있고, 그 정보는 Challenges 테이블에 있습니다. 
+  4) hacker의 이름을 출력하기 위해 Hackers 테이블이 필요합니다. 
+ - 링크 : https://www.hackerrank.com/challenges/full-score/problem
+ - 코드 
