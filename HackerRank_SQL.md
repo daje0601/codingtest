@@ -109,25 +109,47 @@ order by count(s.hacker_id) desc, s.hacker_id asc
 ```
 
 7.
- - 문제의 해석 : 코딩테스트 제출자 중 full score 맞은 문제가 한개보다 많은 (2개 이상) 인 참가자의 hacker_id와, name을 출력하라는문제입니다.
-                여기서 full score가 무엇이지? 고민할 수 있는데, 각 문제별도 주어진 점수표가 full score가 됩니다. 
+ - 문제의 해석 : 해리포터와 친구들은 찰리의 오래되고 부셔진 지팡이를 교체하기 위해 론과 올리벤더 지팡이 가게를 방문했다.
+헤르미온느는 지팡이를 고르는 최선의 방법으로서 non-evil 지팡이이면서 높은 Power와 Age 특성을 갖는 지팡이를 사기 위해 필요한 최소한의 돈(gold galleons)을 고르는 방법을 제안했다. 이 방법을 적용했을 때, 론이 관심있어 할 만한 지팡이의 id, age, coins_needed, power 값들을 출력해라. 이 때 1차적으로 정렬 기준은 power 기준으로 내림차순 정렬하며, 동일한 power 값이 있을 때는 age 값을 기준으로 내림차순 정렬해라.
  - 선정한 이유 : join에 대한 훈련을 할 수 있기때문입니다. 
  - 접근방식 : 
-  1) submissions table을 base로 필요한 정보를 담고 있는 테이블들을 join합니다.    
-  2) 제출한 문제의 full score 를 알기 위해 difficuly 테이블의 score 정보가 필요합니다. 
-  3) difficulty level 정보가 있어야 full score 를 연결할 수 있고, 그 정보는 Challenges 테이블에 있습니다. 
-  4) hacker의 이름을 출력하기 위해 Hackers 테이블이 필요합니다. 
- - 링크 : https://www.hackerrank.com/challenges/full-score/problem
+  1) is_evil=0 값인 non-evil 지팡이들만 골라야 합니다.
+  2) Age, Power 값이 각각 같은 지팡이들 중에서 coins_needed 값을 최소로 하는 지팡이를 골라야 합니다.
+  3) 2개의 정렬 기준을 만족시켜야 합니다. 
+ - 링크 : https://www.hackerrank.com/challenges/harry-potter-and-wands/problem
  - 코드 
- - 
+ ```python
+ SELECT W.id, P.age, W.coins_needed, W.power
+ FROM Wands W
+ INNER JOIN Wands_Property P ON W.code = P.code
+ WHERE P.is_evil = 0
+ AND W.coins_needed = (SELECT MIN(W1.coins_needed)
+                      FROM Wands W1
+                       INNER JOIN Wands_Property P1 ON W1.code = P1.code
+                      WHERE P1.is_evil = 0 
+                      AND W1.power = W.power
+                      AND P1.age = P.age)
+ ORDER BY W.power DESC, P.age DESC
+ ```
 8.
- - 문제의 해석 : 코딩테스트 제출자 중 full score 맞은 문제가 한개보다 많은 (2개 이상) 인 참가자의 hacker_id와, name을 출력하라는문제입니다.
-                여기서 full score가 무엇이지? 고민할 수 있는데, 각 문제별도 주어진 점수표가 full score가 됩니다. 
- - 선정한 이유 : join에 대한 훈련을 할 수 있기때문입니다. 
- - 접근방식 : 
-  1) submissions table을 base로 필요한 정보를 담고 있는 테이블들을 join합니다.    
-  2) 제출한 문제의 full score 를 알기 위해 difficuly 테이블의 score 정보가 필요합니다. 
-  3) difficulty level 정보가 있어야 full score 를 연결할 수 있고, 그 정보는 Challenges 테이블에 있습니다. 
-  4) hacker의 이름을 출력하기 위해 Hackers 테이블이 필요합니다. 
- - 링크 : https://www.hackerrank.com/challenges/full-score/problem
+ - 문제의 해석 : 서브쿼리를 이용한 문제 
+ - 선정한 이유 : 너무 어렵다..
+ - 접근방식 : 너무 어려워서 내일 다시 풀어볼 예정 
  - 코드 
+ ```python
+ SELECT Hackers.hacker_id, Hackers.name, COUNT(*) AS challenges_created
+ FROM Hackers
+  INNER JOIN Challenges ON Hackers.hacker_id = Challenges.hacker_id
+ GROUP BY Hackers.hacker_id, Hackers.name
+ HAVING challenges_created IN (SELECT sub2.challenges_created
+                               FROM (SELECT hacker_id, COUNT(*) AS challenges_created
+                                     FROM Challenges
+                                     GROUP BY Challenges.hacker_id) sub2
+                               GROUP BY sub2.challenges_created
+                               HAVING COUNT(*) = 1)
+     OR challenges_created = (SELECT MAX(sub1.challenges_created)
+                              FROM (SELECT COUNT(*) AS challenges_created
+                                    FROM Challenges
+                                    GROUP BY Challenges.hacker_id) sub1)
+ ORDER BY challenges_created DESC, Hackers.hacker_id
+ ```
