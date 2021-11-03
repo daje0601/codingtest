@@ -1,7 +1,31 @@
+"""
+안녕하세요 다제입니다. 
+이곳에서는 링크드 리스트 관련된 메소드를 직접 구현해보았습니다. 
+
+먼저 Node와 LinkedList가 필요하므로 클래스로 생성하여 줍니다. 
+
+노드에는 데이터를 저장하는 기능과 다음 데이터를 가르키는 역할 2가지를 합니다. 
+"""
+
 class Node:
     def __init__(self, data):
         self.data = data
         self.next = None
+
+        
+"""
+링크드 리스트는 총 8가지의 기능을 구현해보았습니다. 
+가지 수가 다른 링크드 리스트보다 많은 이유는 기능별로 함수를 정의하는 것이 관리하기 편하기 때문입니다. 
+
+1. append : 링크드 리스트 추가 연산 메소드 
+2. str : 링크드 리스트를 문자열로 표현해서 리턴하는 메소드
+3. find_node_with_index : 인덱스를 받아 해당 인덱스를 찾는 메소드
+4. find_node_with_data : 원하는 값을 찾는 메소드
+5. insert_after : previous_node 다음에 data를 삽입하는 메소드
+6. prepend : 링크드 리스트 맨 앞 데이터 삽입하는 메소드
+7. delete : 링크드 리스트 중간에 있는 노드를 삭제하는 메소드 
+8. popleft : head를 삭제하는 메소드 
+"""
 
 class LinkedList:
     """링크드리스트"""
@@ -10,7 +34,7 @@ class LinkedList:
         self.tail = None
 
     def append(self, data):
-        """링크드 리스트 추가 연사 메소드"""
+        """링크드 리스트 추가 연산 메소드"""
         new_node = Node(data)
         if self.head is None:
             self.head = new_node
@@ -99,7 +123,7 @@ class LinkedList:
 # print(linked_list)
 
     def delete(self, previous_node):
-        """삭제하는 메소드"""
+        """링크드 리스트 중간에 있는 노드를 삭제하는 메소드"""
         data = previous_node.next.data
 
         if previous_node.next is self.tail:
@@ -119,4 +143,4 @@ class LinkedList:
         else:
             self.head = self.head.next
         return data
-#
+
